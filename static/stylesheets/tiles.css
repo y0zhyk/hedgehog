@@ -1,0 +1,80 @@
+.tile {
+    float: left;
+    position: relative;
+    margin: 0.5em;
+    padding: 0.5em;
+    background: green;
+    width: 15em;
+    height: 8em;
+    color: white;
+}
+
+.width2 {
+    width: 32em;
+}
+
+.width3 {
+    width: 49em;
+}
+
+.width4 {
+    width: 66em;
+}
+
+.height2 {
+    height: 18em;
+}
+
+.height3 {
+    height: 28em;
+}
+
+.height4 {
+    height: 38em;
+}
+
+a.tile {
+    cursor: pointer;
+}
+
+a.tile:hover {
+    opacity: 0.5;
+}
+
+.icon span {
+    position: absolute;
+    left: 0.5em;
+    bottom: 0.5em;
+}
+
+.tile img {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-left: -51px;
+    margin-top: -51px;
+}
+
+.stats {
+     background: black;
+     line-height: 35px;
+}
+
+.stats .meter {
+    height: 10px;
+    border: 1px solid;
+    padding: 3px;
+}
+
+.stats .meter > span {
+    display: block;
+    background-color: white;
+    height: 100%;
+    width: 0;
+    transition: width 2s;
+    -webkit-transition: width 2s;
+}
+
+.stats .value {
+    float: right;
+}
