@@ -1,7 +1,7 @@
 from string import Template
 
 
-class Tile(object):
+class Tile:
     def __init__(self, width, height, clickable):
         self.__width = width
         self.__height = height
@@ -41,7 +41,7 @@ class Tile(object):
 
 class IconTile(Tile):
     def __init__(self, name, icon):
-        super(IconTile, self).__init__(1, 1, True)
+        super().__init__(1, 1, True)
         self.__name = name
         self.__icon = icon
 
@@ -54,7 +54,7 @@ class IconTile(Tile):
         return "static/images/{}".format(self.__icon)
 
     def _class(self):
-        return super(IconTile, self)._class() + " icon"
+        return super()._class() + " icon"
 
     def _content(self):
         template = '<span>$name</span><img src="$icon">'
@@ -63,31 +63,47 @@ class IconTile(Tile):
 
 class StatsTile(Tile):
     def __init__(self):
-        super(StatsTile, self).__init__(1, 2, False)
+        super().__init__(1, 2, False)
 
     def _class(self):
-        return super(StatsTile, self)._class() + " stats"
+        return super()._class() + " stats"
 
     def _content(self):
-        return '<div>CPU usage:<span class=value id=cpu_value>0.0%</span></div>'+ \
+        return '<div>CPU usage:<span class=value id=cpu_value>0.0%</span></div>' \
+               '<div class=meter><span id=cpu_percent/></div>' \
+               '<div>Memory usage:<span class=value id=cpu_value>47MB/437MB</span></div>' \
                '<div class=meter><span id=cpu_percent/></div>'
 
 
 class LoginTile(Tile):
     def __init__(self):
-        super().__init__(2, 1, False)
+        super().__init__(4, 1, False)
+
+    def _class(self):
+        return super()._class() + " login"
+
+    def _content(self):
+        return '<svg width="630" height="300">' \
+               '<polygon points="0,0 100,0 150,75 100,150 0,150" style="fill:#C60C30"/>' \
+               '</svg>' \
+               '<img src="static/images/password.png">' \
+               '<form method="post" action="login">' \
+               '<input type="password" name="login" value="" placeholder="Password">' \
+               '<input type="submit" name="submit" value="">' \
+               '</form>'
 
 
 class Tiles(list):
     def __init__(self, items):
-        super(Tiles, self).__init__()
+        super().__init__()
         self.extend(items)
 
 
 tiles = Tiles(
     [
         LoginTile(),
-        StatsTile(),
         IconTile(name="Torrent", icon="torrent.png"),
+        IconTile(name="Log out", icon="logout.png"),
+        StatsTile(),
     ]
 )

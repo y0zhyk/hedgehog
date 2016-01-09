@@ -1,6 +1,6 @@
 body {
-    background-color: #111;
-    color: white;
+    background-color: #333333;
+    color: #F4F4F4;
     font-family: Metrophobic;
     position: relative;
     width: auto;
@@ -9,7 +9,6 @@ body {
 }
 
 header {
-    border: 1px solid;
     position: absolute;
     height: 100px;
     left: 400px;
@@ -17,7 +16,6 @@ header {
 }
 
 article {
-    border: 1px solid;
     position: absolute;
     left: 0;
     top: 100px;
@@ -25,7 +23,6 @@ article {
 }
 
 footer {
-    border: 1px solid;
     position: absolute;
     bottom: 0;
     width: 100%;
@@ -42,8 +39,8 @@ header h1 {
 }
 
 header h1 span {
-    color: black;
-    text-shadow: 1px 1px 5px white;
+    color: #333333;
+    text-shadow: 1px 1px 5px #F4F4F4;
 }
 
 footer h6 {
