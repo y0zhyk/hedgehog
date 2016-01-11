@@ -3,21 +3,21 @@ from string import Template
 
 class Tile:
     def __init__(self, width, height, clickable):
-        self.__width = width
-        self.__height = height
-        self.__clickable = clickable
+        self._width = width
+        self._height = height
+        self._clickable = clickable
 
     @property
     def width(self):
-        return self.__width
+        return self._width
 
     @property
     def height(self):
-        return self.__height
+        return self._height
 
     @property
     def clickable(self):
-        return self.__clickable
+        return self._clickable
 
     def _class(self):
         result = "tile"
@@ -40,10 +40,11 @@ class Tile:
 
 
 class IconTile(Tile):
-    def __init__(self, name, icon):
+    def __init__(self, name, icon, color):
         super().__init__(1, 1, True)
         self.__name = name
         self.__icon = icon
+        self.__color = color
 
     @property
     def name(self):
@@ -53,17 +54,21 @@ class IconTile(Tile):
     def icon(self):
         return "static/images/{}".format(self.__icon)
 
+    @property
+    def color(self):
+        return self.__color
+
     def _class(self):
         return super()._class() + " icon"
 
     def _content(self):
-        template = '<span>$name</span><img src="$icon">'
-        return Template(template).substitute(name=self.name, icon=self.icon)
+        template = '<div style="background-color:$color"><span>$name</span><img src="$icon"></div>'
+        return Template(template).substitute(name=self.name, icon=self.icon, color=self.color)
 
 
 class StatsTile(Tile):
     def __init__(self):
-        super().__init__(1, 2, False)
+        super().__init__(2, 2, False)
 
     def _class(self):
         return super()._class() + " stats"
@@ -83,9 +88,7 @@ class LoginTile(Tile):
         return super()._class() + " login"
 
     def _content(self):
-        return '<svg width="630" height="300">' \
-               '<polygon points="0,0 100,0 150,75 100,150 0,150" style="fill:#C60C30"/>' \
-               '</svg>' \
+        return '<svg><polygon points="0,0 100,0 150,75 100,150 0,150"/></svg>' \
                '<img src="static/images/password.png">' \
                '<form method="post" action="login">' \
                '<input type="password" name="login" value="" placeholder="Password">' \
@@ -102,8 +105,8 @@ class Tiles(list):
 tiles = Tiles(
     [
         LoginTile(),
-        IconTile(name="Torrent", icon="torrent.png"),
-        IconTile(name="Log out", icon="logout.png"),
+        IconTile(name="Torrent", icon="torrent.png", color="#FF0000"),
+        IconTile(name="Log out", icon="logout.png", color="red"),
         StatsTile(),
     ]
 )

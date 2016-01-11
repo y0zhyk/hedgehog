@@ -1,11 +1,10 @@
 .tile {
-    float: left;
     position: relative;
+    float: left;
     margin: 5px;
-    background: #C60C30;
     width: 150px;
     height: 150px;
-    color: white;
+    color: #F4F4F4;
 }
 
 .width2 {
@@ -24,6 +23,14 @@
     height: 310px;
 }
 
+.height3 {
+    height: 470px;
+}
+
+.height4 {
+    height: 630px;
+}
+
 a.tile {
     cursor: pointer;
 }
@@ -34,20 +41,26 @@ a.tile:hover {
 
 .icon span {
     position: absolute;
-    left: 8px;
-    bottom: 8px;
+    left: 5px;
+    bottom: 5px;
+    font-size: 14px;
 }
 
 .icon img {
     position: absolute;
     left: 50%;
     top: 50%;
-    margin-left: -51px;
-    margin-top: -51px;
+    margin-left: -52px;
+    margin-top: -58px;
 }
 
 .login {
     background: #F4F4F4
+}
+
+.login svg polygon{
+    fill: #C60C30;
+    points: "0,0 100,0 150,75 100,150 0,150";
 }
 
 .login img {
@@ -60,11 +73,11 @@ a.tile:hover {
 .login input[name=login] {
     position: absolute;
     top: 50%;
-    margin-top: -15px;
-    left: 250px;
+    margin-top: -16px;
+    left: 175px;
     border: 2px solid #C60C30;
     height: 26px;
-    width: 270px;
+    width: 350px;
     background-color: #F4F4F4;
     color: #333333;
     font-size: 18px;
@@ -74,7 +87,7 @@ a.tile:hover {
     position: absolute;
     top: 50%;
     margin-top: -14px;
-    left: 480px;
+    left: 550px;
     cursor: pointer;
     height: 26px;
     width: 26px;
