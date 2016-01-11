@@ -80,6 +80,20 @@ class StatsTile(Tile):
                '<div class=meter><span id=cpu_percent/></div>'
 
 
+class StatsTile1(Tile):
+    def __init__(self):
+        super().__init__(2, 2, False)
+
+    def _class(self):
+        return super()._class() + " stats"
+
+    def _content(self):
+        return '<img src="static/images/processor.png"><br>' \
+                '<img src="static/images/memory.png"><br>' \
+                '<img src="static/images/memory.png"><br>' \
+                '<img src="static/images/sd.png"><br>' \
+                '<img src="static/images/temperature.png"><br>'
+
 class LoginTile(Tile):
     def __init__(self):
         super().__init__(4, 1, False)
@@ -105,8 +119,8 @@ class Tiles(list):
 tiles = Tiles(
     [
         LoginTile(),
-        IconTile(name="Torrent", icon="torrent.png", color="#FF0000"),
         IconTile(name="Log out", icon="logout.png", color="red"),
         StatsTile(),
+        StatsTile1()
     ]
 )
