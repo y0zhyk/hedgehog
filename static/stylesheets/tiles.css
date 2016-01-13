@@ -71,7 +71,7 @@ a.tile:hover {
     margin: -26px;
 }
 
-.login input[name=login] {
+.login input[name=password] {
     position: absolute;
     top: 50%;
     margin-top: -16px;
@@ -103,7 +103,7 @@ a.tile:hover {
 }
 
 .stats img {
-     padding: 3px;
+     padding: 1px;
 }
 
 .stats .meter {

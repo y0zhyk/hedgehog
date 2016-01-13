@@ -1,6 +1,5 @@
 __pycache__/
 venv/
 .idea/
-.DS_Store/
 *.py[cod]
-
+.DS_Store

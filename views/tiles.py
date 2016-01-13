@@ -6,6 +6,7 @@ class Tile:
         self._width = width
         self._height = height
         self._clickable = clickable
+        self._attributes = dict()
 
     @property
     def width(self):
@@ -32,18 +33,24 @@ class Tile:
         return self._to_html()
 
     def _to_html(self):
-        template = '<$tag class="$cls">$content</$tag>'
-        return Template(template).substitute(tag=self._tag(), cls=self._class(), content=self._content())
+        self._attributes['class'] = self._class()
+        attributes = ' '.join(['{}="{}"'.format(name, value) for (name, value) in self._attributes.items()])
+        template = '<$tag $attributes>$content</$tag>'
+        return Template(template).substitute(tag=self._tag(), attributes=attributes, content=self._content())
 
     def _content(self):
         return ""
 
+    def _add_attribute(self, name, value):
+        self._attributes[name] = value
+
 
 class IconTile(Tile):
-    def __init__(self, name, icon, color):
+    def __init__(self, name, icon, href, color):
         super().__init__(1, 1, True)
         self.__name = name
         self.__icon = icon
+        self.__href = href
         self.__color = color
 
     @property
@@ -58,11 +65,20 @@ class IconTile(Tile):
     def color(self):
         return self.__color
 
+    @property
+    def href(self):
+        return self.__href
+
     def _class(self):
         return super()._class() + " icon"
 
+    def _to_html(self):
+        self._add_attribute('href', self.href)
+        self._add_attribute('style', 'background-color:{}'.format(self.color))
+        return super()._to_html()
+
     def _content(self):
-        template = '<div style="background-color:$color"><span>$name</span><img src="$icon"></div>'
+        template = '<span>$name</span><img src="$icon">'
         return Template(template).substitute(name=self.name, icon=self.icon, color=self.color)
 
 
@@ -74,25 +90,12 @@ class StatsTile(Tile):
         return super()._class() + " stats"
 
     def _content(self):
-        return '<div>CPU usage:<span class=value id=cpu_value>0.0%</span></div>' \
-               '<div class=meter><span id=cpu_percent/></div>' \
-               '<div>Memory usage:<span class=value id=cpu_value>47MB/437MB</span></div>' \
-               '<div class=meter><span id=cpu_percent/></div>'
-
-
-class StatsTile1(Tile):
-    def __init__(self):
-        super().__init__(2, 2, False)
-
-    def _class(self):
-        return super()._class() + " stats"
-
-    def _content(self):
         return '<img src="static/images/processor.png"><br>' \
-                '<img src="static/images/memory.png"><br>' \
-                '<img src="static/images/memory.png"><br>' \
-                '<img src="static/images/sd.png"><br>' \
-                '<img src="static/images/temperature.png"><br>'
+               '<img src="static/images/memory.png"><br>' \
+               '<img src="static/images/memory.png"><br>' \
+               '<img src="static/images/sd.png"><br>' \
+               '<img src="static/images/temperature.png"><br>'
+
 
 class LoginTile(Tile):
     def __init__(self):
@@ -105,22 +108,15 @@ class LoginTile(Tile):
         return '<svg><polygon points="0,0 100,0 150,75 100,150 0,150"/></svg>' \
                '<img src="static/images/password.png">' \
                '<form method="post" action="login">' \
-               '<input type="password" name="login" value="" placeholder="Password">' \
+               '<input type="password" name="password" value="" placeholder="Password">' \
                '<input type="submit" name="submit" value="">' \
                '</form>'
 
 
-class Tiles(list):
-    def __init__(self, items):
-        super().__init__()
-        self.extend(items)
-
-
-tiles = Tiles(
-    [
-        LoginTile(),
-        IconTile(name="Log out", icon="logout.png", color="red"),
-        StatsTile(),
-        StatsTile1()
-    ]
-)
+def tiles(is_session_authenticated):
+    if not is_session_authenticated:
+        return [LoginTile()]
+    else:
+        return [IconTile(name='Logout', icon='logout.png', href='/logout', color='#C60C30'),
+                StatsTile(),
+                ]
