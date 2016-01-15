@@ -11,4 +11,3 @@ def home():
     is_user_authenticated = is_session_authenticated()
     current_tiles = tiles(is_user_authenticated)
     return render_template('home.html', tiles=current_tiles)
-

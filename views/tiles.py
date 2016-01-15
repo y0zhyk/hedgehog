@@ -35,7 +35,7 @@ class Tile:
     def _to_html(self):
         self._attributes['class'] = self._class()
         attributes = ' '.join(['{}="{}"'.format(name, value) for (name, value) in self._attributes.items()])
-        template = '<$tag $attributes>$content</$tag>'
+        template = '<$tag $attributes><div>$content</div></$tag>'
         return Template(template).substitute(tag=self._tag(), attributes=attributes, content=self._content())
 
     def _content(self):
@@ -74,7 +74,8 @@ class IconTile(Tile):
 
     def _to_html(self):
         self._add_attribute('href', self.href)
-        self._add_attribute('style', 'background-color:{}'.format(self.color))
+        if self.color:
+            self._add_attribute('style', 'background-color:{}'.format(self.color))
         return super()._to_html()
 
     def _content(self):

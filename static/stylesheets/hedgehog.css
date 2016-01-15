@@ -2,45 +2,53 @@ body {
     background-color: #333333;
     color: #F4F4F4;
     font-family: Metrophobic;
-    padding: 0px;
-    margin: 0px;
+    padding: 0;
+    margin: 0;
 }
-header, footer, #tiles { 
+
+header, footer, #tiles {
     width: 100%;
 }
+
 header {
-    background-color: red;    
     text-align: right;
 }
+
 #tiles {
-    background-color: green;    
+    display: flex;
 }
+
 footer {
-    background-color: blue;    
 }
+
 header > h1 {
     font-family: Consolas;
     font-size: 80px;
     font-weight: bold;
-    margin: 0px 20px; 
+    margin: 0 20px;
 }
+
 header > h1 > span {
     color: #333333;
     text-shadow: 1px 1px 5px #F4F4F4;
 }
+
 footer > h6 {
-    margin: 0px; 
+    margin: 0;
     text-align: center;
 }
+
 .tile {
+    margin: 5px;
     float: left;
     width: 150px;
     height: 150px;
 }
+
 .width2 {
     width: 310px;
 }
-/*
+
 .width3 {
     width: 470px;
 }
@@ -61,6 +69,12 @@ footer > h6 {
     height: 630px;
 }
 
+.tile > div{
+    width: inherit;
+    height: inherit;
+    position: absolute;
+}
+
 a.tile {
     cursor: pointer;
 }
@@ -70,14 +84,15 @@ a.tile:hover {
 }
 
 .icon span {
-    position: absolute;
+    position: inherit;
+    font-size: 14px;
     left: 5px;
     bottom: 5px;
-    font-size: 14px;
+    color: #F4F4F4;
 }
 
 .icon img {
-    position: absolute;
+    position: inherit;
     left: 50%;
     top: 50%;
     margin-left: -52px;
@@ -90,11 +105,10 @@ a.tile:hover {
 
 .login svg polygon{
     fill: #C60C30;
-    points: "0,0 100,0 150,75 100,150 0,150";
 }
 
 .login img {
-    position: absolute;
+    position: inherit;
     top: 50%;
     left: 75px;
     margin: -26px;
@@ -126,7 +140,6 @@ a.tile:hover {
     border: 0;
 }
 
-
 .stats {
      background: #0c8dc6;
 }
@@ -153,4 +166,3 @@ a.tile:hover {
 .stats .value {
     float: right;
 }
-*/

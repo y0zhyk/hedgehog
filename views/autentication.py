@@ -1,5 +1,4 @@
-from flask import Blueprint, request, redirect, session, escape
-
+from flask import Blueprint, request, redirect, session
 
 authentication = Blueprint('authentication', __name__)
 
@@ -12,10 +11,12 @@ def login():
         return redirect('/home')
     return redirect('/home')
 
+
 @authentication.route('/logout')
 def logout():
     session.pop('ticket', None)
     return redirect('/home')
+
 
 def is_valid_ticket(ticket):
     return ticket == '000'
