@@ -19,7 +19,7 @@ def memory_usage():
         import psutil
         usage = psutil.virtual_memory()
         percent = usage.percent
-        value = "{%d}MB/{%d}MB".format((usage.total - usage.available) / 1048576, usage.total / 1048576)
+        value = "{}MB/{}MB".format((usage.total - usage.available) // 1048576, usage.total // 1048576)
     except ImportError:
         pass
     return percent, value
@@ -32,7 +32,7 @@ def swap_usage():
         import psutil
         usage = psutil.swap_memory()
         percent = usage.percent
-        value = "{%d}MB/{%d}MB".format(usage.used / 1048576, usage.total / 1048576)
+        value = "{}MB/{}MB".format(usage.used // 1048576, usage.total // 1048576)
     except ImportError:
         pass
     return percent, value
