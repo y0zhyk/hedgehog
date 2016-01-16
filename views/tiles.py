@@ -90,13 +90,6 @@ class StatsTile(Tile):
     def _class(self):
         return super()._class() + " stats"
 
-    def _content(self):
-        return '<img src="static/images/processor.png"><br>' \
-               '<img src="static/images/memory.png"><br>' \
-               '<img src="static/images/memory.png"><br>' \
-               '<img src="static/images/sd.png"><br>' \
-               '<img src="static/images/temperature.png"><br>'
-
 
 class LoginTile(Tile):
     def __init__(self):

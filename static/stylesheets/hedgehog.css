@@ -117,7 +117,7 @@ a.tile:hover {
 .login input[name=password] {
     position: absolute;
     top: 50%;
-    margin-top: -16px;
+    margin-top: -15px;
     left: 175px;
     border: 2px solid #C60C30;
     border-radius: 4px;
@@ -131,32 +131,44 @@ a.tile:hover {
 .login input[name=submit] {
     position: absolute;
     top: 50%;
-    margin-top: -14px;
+    margin-top: -26px;
     left: 550px;
     cursor: pointer;
-    height: 26px;
-    width: 26px;
+    height: 52px;
+    width: 52px;
     background: url("../images/enter.png") no-repeat;
     border: 0;
 }
 
 .stats {
-     background: #0c8dc6;
+    background: #0c8dc6;
+    display: block;
+}
+
+.stat {
+    position: relative;
 }
 
 .stats img {
-     padding: 1px;
+    margin-top: 5px;
+    margin-left: 5px;
 }
 
-.stats .meter {
-    height: 10px;
-    border: 1px solid;
+.stats div.meter {
+    position: absolute;
+    left: 62px;
+    right: 5px;
+    top: 28px;
+    height: 20px;
+    background-color: #F4F4F4;
+    border-radius: 6px;
     padding: 3px;
 }
 
 .stats .meter > span {
     display: block;
-    background-color: white;
+    background-color: #0c8dc6;
+    border-radius: 3px;
     height: 100%;
     width: 0;
     transition: width 2s;
@@ -164,5 +176,6 @@ a.tile:hover {
 }
 
 .stats .value {
+    margin: 5px;
     float: right;
 }
