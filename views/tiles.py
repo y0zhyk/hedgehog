@@ -128,6 +128,7 @@ def tiles(is_session_authenticated):
     if not is_session_authenticated:
         return [LoginTile()]
     else:
-        return [ClickableIconTile(name='Logout', icon='logout.png', href='/logout', color='#C60C30'),
-                StatsTile(),
+        return [StatsTile(),
+                ClickableIconTile(name='Logout', icon='logout.png', href='/logout', color='#C60C30'),
+                ClickableIconTile(name='Wifi', icon='wifi.png', href='http://hedgehog.no-ip.info', color='green')
                 ]
