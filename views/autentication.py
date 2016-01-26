@@ -34,10 +34,13 @@ def generate_login_form():
     template = '<svg><polygon points="0,0 100,0 150,75 100,150 0,150"/></svg>' \
                '<img src="static/images/password.png">' \
                '<form method="post" action="login">' \
-               '<span class="error">$error</span>' \
+               '<span class="error" hidden>$error</span>' \
                '<input type="password" name="password" value placeholder="Password">' \
                '<input type="submit" name="submit" value>' \
-               '</form>'
+               '</form>' \
+               '<script>' \
+               ' (function() { $$(document).ready(function() { return showErrorMessage(); }); }).call(this);' \
+               '</script>'
     return Template(template).substitute(error=error)
 
 def is_valid_ticket(ticket):

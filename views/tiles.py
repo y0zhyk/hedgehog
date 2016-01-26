@@ -111,6 +111,8 @@ class StatsTile(Tile):
 
     def _update_content(self):
         self._content.add_attribute('class', 'stats')
+        content = '<script> (function() { $(document).ready(function() { return showStats(); }); }).call(this);</script>'
+        self._content.set_content(content)
 
 
 class LoginTile(Tile):
@@ -130,5 +132,5 @@ def tiles(is_session_authenticated):
     else:
         return [StatsTile(),
                 ClickableIconTile(name='Logout', icon='logout.png', href='/logout', color='#C60C30'),
-                ClickableIconTile(name='Wifi', icon='wifi.png', href='http://hedgehog.no-ip.info', color='green')
+                ClickableIconTile(name='Wifi', icon='wifi.png', href='http://hedgehog.no-ip.info', color='#1E7145'),
                 ]
