@@ -2,60 +2,83 @@ from string import Template
 
 
 class Tile:
-    def __init__(self, width, height, clickable):
-        self._width = width
-        self._height = height
-        self._clickable = clickable
-        self._attributes = dict()
+    def __init__(self, width, height):
+        self.__width = width
+        self.__height = height
+        self._content = None
 
     @property
     def width(self):
-        return self._width
+        return self.__width
 
     @property
     def height(self):
-        return self._height
+        return self.__height
+
+    def _update_content(self):
+        pass
 
     @property
-    def clickable(self):
-        return self._clickable
+    def __content(self):
+        self._update_content()
+        return self._content.to_html() if self._content is not None else ""
 
-    def _class(self):
-        result = "tile"
-        result += " height{}".format(self.height) if self.height >= 2 else ""
-        result += " width{}".format(self.width) if self.width >= 2 else ""
-        return result
-
-    def _tag(self):
-        return "a" if self.clickable else "div"
+    @property
+    def __class(self):
+        cls = ['tile']
+        if self.height >= 2:
+            cls.append('height{}'.format(self.height))
+        if self.width >= 2:
+            cls.append('width{}'.format(self.width))
+        return ' '.join(cls)
 
     def __html__(self):
-        return self._to_html()
-
-    def _to_html(self):
-        self._attributes['class'] = self._class()
-        attributes = ' '.join(['{}="{}"'.format(name, value) for (name, value) in self._attributes.items()])
-        template = '<$tag $attributes><div>$content</div></$tag>'
-        return Template(template).substitute(tag=self._tag(), attributes=attributes, content=self._content())
-
-    def _content(self):
-        return ""
-
-    def _add_attribute(self, name, value):
-        self._attributes[name] = value
+        template = '<div class="$cls">$content</div>'
+        return Template(template).substitute(cls=self.__class, content=self.__content)
 
 
-class IconTile(Tile):
-    def __init__(self, name, icon, href, color):
-        super().__init__(1, 1, True)
-        self.__name = name
-        self.__icon = icon
-        self.__href = href
-        self.__color = color
+class TileContent:
+    def __init__(self, tag='div'):
+        self.__tag = tag
+        self.__attributes = dict()
+        self.__content = ''
+
+    def add_attribute(self, name, value):
+        self.__attributes[name] = value
 
     @property
-    def name(self):
-        return self.__name
+    def tag(self):
+        return self.__tag
+
+    def to_html(self):
+        attributes = ' '.join(['{}="{}"'.format(name, value) for (name, value) in self.__attributes.items()])
+        template = '<$tag $attributes>$content</$tag>'
+        return Template(template).substitute(tag=self.__tag, attributes=attributes, content=self.__content)
+
+    def set_content(self, content):
+        self.__content = content
+
+
+class ClickableTile(Tile):
+    def __init__(self, width, height, href):
+        super().__init__(width, height)
+        self.__href = href
+        self._content = TileContent('a')
+
+    @property
+    def href(self):
+        return self.__href
+
+    def _update_content(self):
+        self._content.add_attribute('href', self.href)
+
+
+class ClickableIconTile(ClickableTile):
+    def __init__(self, name, icon, href, color=None):
+        super().__init__(1, 1, href)
+        self.__icon = icon
+        self.__color = color
+        self.__name = name
 
     @property
     def icon(self):
@@ -66,51 +89,48 @@ class IconTile(Tile):
         return self.__color
 
     @property
-    def href(self):
-        return self.__href
+    def name(self):
+        return self.__name
 
-    def _class(self):
-        return super()._class() + " icon"
-
-    def _to_html(self):
-        self._add_attribute('href', self.href)
+    def _update_content(self):
+        super()._update_content()
+        self._content.add_attribute('class', 'icon')
         if self.color:
-            self._add_attribute('style', 'background-color:{}'.format(self.color))
-        return super()._to_html()
-
-    def _content(self):
+            self._content.add_attribute('style', 'background-color:{}'.format(self.color))
         template = '<span>$name</span><img src="$icon">'
-        return Template(template).substitute(name=self.name, icon=self.icon, color=self.color)
+        content = Template(template).substitute(name=self.name, icon=self.icon, color=self.color)
+        self._content.set_content(content)
 
 
 class StatsTile(Tile):
     def __init__(self):
-        super().__init__(2, 2, False)
+        super().__init__(2, 2)
+        self._content = TileContent()
 
-    def _class(self):
-        return super()._class() + " stats"
+    def _update_content(self):
+        self._content.add_attribute('class', 'stats')
 
 
 class LoginTile(Tile):
     def __init__(self):
-        super().__init__(4, 1, False)
+        super().__init__(4, 1)
+        self._content = TileContent()
 
-    def _class(self):
-        return super()._class() + " login"
-
-    def _content(self):
-        return '<svg><polygon points="0,0 100,0 150,75 100,150 0,150"/></svg>' \
-               '<img src="static/images/password.png">' \
-               '<form method="post" action="login">' \
-               '<input type="password" name="password" value="" placeholder="Password">' \
-               '<input type="submit" name="submit" value="">' \
-               '</form>'
+    def _update_content(self):
+        self._content.add_attribute('class', 'login')
+        content = '<svg><polygon points="0,0 100,0 150,75 100,150 0,150"/></svg>' \
+                  '<img src="static/images/password.png">' \
+                  '<form method="post" action="login">' \
+                  '<input type="password" name="password" value placeholder="Password">' \
+                  '<input type="submit" name="submit" value>' \
+                  '</form>'
+        self._content.set_content(content)
 
 
 def tiles(is_session_authenticated):
     if not is_session_authenticated:
         return [LoginTile()]
     else:
-        return [IconTile(name='Logout', icon='logout.png', href='/logout', color='#C60C30'),
+        return [ClickableIconTile(name='Logout', icon='logout.png', href='/logout', color='#C60C30'),
                 StatsTile(),
                 ]

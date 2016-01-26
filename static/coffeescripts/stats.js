@@ -12,7 +12,7 @@
       ref = data.stats;
       for (i = 0, len = ref.length; i < len; i++) {
         stat = ref[i];
-        $(".stats > div").append("<div class=stat id=" + stat.id + "><img src=/static/images/" + stat.id + ".png><div class=value/><div class=meter><span/></div></div>");
+        $("div.stats").append("<div class=stat id=" + stat.id + "><img src=/static/images/" + stat.id + ".png><div class=value/><div class=meter><span/></div></div>");
       }
       return updateStats();
     });

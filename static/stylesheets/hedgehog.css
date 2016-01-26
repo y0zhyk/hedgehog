@@ -69,17 +69,17 @@ footer > h6 {
     height: 630px;
 }
 
-.tile > div{
+.tile > div, a {
     width: inherit;
     height: inherit;
     position: absolute;
 }
 
-a.tile {
+.tile > a {
     cursor: pointer;
 }
 
-a.tile:hover {
+.tile > a:hover {
     opacity: 0.8;
 }
 
