@@ -140,6 +140,13 @@ footer > h6 {
     border: 0;
 }
 
+.login .error {
+    position: absolute;
+    left: 175px;
+    top: 25%;
+    color: #C60C30;
+}
+
 .stats {
     background: #0c8dc6;
     display: block;

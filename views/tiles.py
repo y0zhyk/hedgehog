@@ -1,5 +1,7 @@
 from string import Template
 
+from views.autentication import generate_login_form
+
 
 class Tile:
     def __init__(self, width, height):
@@ -118,12 +120,7 @@ class LoginTile(Tile):
 
     def _update_content(self):
         self._content.add_attribute('class', 'login')
-        content = '<svg><polygon points="0,0 100,0 150,75 100,150 0,150"/></svg>' \
-                  '<img src="static/images/password.png">' \
-                  '<form method="post" action="login">' \
-                  '<input type="password" name="password" value placeholder="Password">' \
-                  '<input type="submit" name="submit" value>' \
-                  '</form>'
+        content = generate_login_form()
         self._content.set_content(content)
 
 

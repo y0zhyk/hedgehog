@@ -1,6 +1,9 @@
+from string import Template
+
 from flask import Blueprint, request, redirect, session
 
 authentication = Blueprint('authentication', __name__)
+authentication_error = ""
 
 
 @authentication.route('/login', methods=['POST', 'GET'])
@@ -11,6 +14,8 @@ def login():
     if 'password' == password:
         session['ticket'] = '000'
         return redirect('/home')
+    global authentication_error
+    authentication_error = "Incorrect password"
     return redirect('/home')
 
 
@@ -21,8 +26,19 @@ def logout():
 
 
 def generate_login_form():
-    return
-
+    error = ""
+    global authentication_error
+    if authentication_error:
+        error = authentication_error
+        authentication_error = ""
+    template = '<svg><polygon points="0,0 100,0 150,75 100,150 0,150"/></svg>' \
+               '<img src="static/images/password.png">' \
+               '<form method="post" action="login">' \
+               '<span class="error">$error</span>' \
+               '<input type="password" name="password" value placeholder="Password">' \
+               '<input type="submit" name="submit" value>' \
+               '</form>'
+    return Template(template).substitute(error=error)
 
 def is_valid_ticket(ticket):
     return ticket == '000'
