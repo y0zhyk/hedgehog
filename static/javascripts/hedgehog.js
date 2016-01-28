@@ -1,7 +1,3 @@
-showErrorMessage = function () {
-    return $('span.error').fadeIn().delay(5000).fadeOut();
-};
-
 showStats = function () {
     return $.getJSON('api/stats', function (data) {
         var i, len, ref, stat;
@@ -28,3 +24,51 @@ updateStats = function () {
     });
 };
 
+$(document).ready(function() {
+
+    var Consts = {
+        tileSize: 150,
+        gutter: 10,
+    };
+
+    var Tile = function () {
+        this.width = 0;
+        this.height = 0;
+        this.self = 0;
+    };
+
+    var tiles = [];
+
+    var windowWidth = $('body').width();
+    var maxNumberOfTiles = Math.floor(windowWidth / (Consts.tileSize + Consts.gutter))
+
+    var totalTilesWidth = 0;
+    var maxTileHeight = 0;
+    $('.tile').each(function() {
+        var tile = new Tile();
+        tile.width = this.offsetWidth;
+        tile.height = this.offsetHeight;
+        tile.self = this;
+        totalTilesWidth += tile.width + Consts.gutter;
+        tiles.push(tile);
+        maxTileHeight = Math.max(tile.height, maxTileHeight)
+    });
+
+    var numberOfTiles = tiles.length;
+
+    if (totalTilesWidth <= windowWidth) {
+        var x = Math.floor((windowWidth - totalTilesWidth) / 2);
+        for (var i = 0; i < numberOfTiles; i++) {
+            var tile = tiles[i];
+            $(tile.self).css({
+                left: x
+            });
+            x += tile.width + Consts.gutter;
+        };
+
+        $('footer').css({
+            top: 100 + maxTileHeight + Consts.gutter
+        });
+
+    }
+});

@@ -1,6 +1,6 @@
 from flask import Flask
+from services.authentication import authentication
 from views.hedgehog import hedgehog
-from views.autentication import authentication
 from views.raspberrypi import raspberrypi
 
 app = Flask(__name__)

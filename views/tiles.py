@@ -1,7 +1,5 @@
 from string import Template
 
-from views.autentication import generate_login_form
-
 
 class Tile:
     def __init__(self, width, height):
@@ -111,19 +109,35 @@ class StatsTile(Tile):
 
     def _update_content(self):
         self._content.add_attribute('class', 'stats')
-        content = '<script> (function() { $(document).ready(function() { return showStats(); }); }).call(this);</script>'
+        content = '<script>$(document).ready(function() { return showStats(); }); </script>'
         self._content.set_content(content)
 
 
 class LoginTile(Tile):
+    CONTEXT = \
+        '''
+        <svg><polygon points="0,0 100,0 150,75 100,150 0,150"/></svg>
+        <img src="static/images/password.png">
+        <script>
+            $(document).ready(function() {
+                $.ajax({
+                    url: "/api/login",
+                    success: function(response){
+                        $("div.login").append(response);
+                        $(".login > span").delay(5000).fadeOut();
+                    }
+                });
+            });
+        </script>
+        '''
+
     def __init__(self):
         super().__init__(4, 1)
         self._content = TileContent()
 
     def _update_content(self):
         self._content.add_attribute('class', 'login')
-        content = generate_login_form()
-        self._content.set_content(content)
+        self._content.set_content(self.CONTEXT)
 
 
 def tiles(is_session_authenticated):
@@ -131,6 +145,6 @@ def tiles(is_session_authenticated):
         return [LoginTile()]
     else:
         return [StatsTile(),
-                ClickableIconTile(name='Logout', icon='logout.png', href='/logout', color='#C60C30'),
+                ClickableIconTile(name='Logout', icon='logout.png', href='/api/logout', color='#C60C30'),
                 ClickableIconTile(name='Wifi', icon='wifi.png', href='http://hedgehog.no-ip.info', color='#1E7145'),
                 ]

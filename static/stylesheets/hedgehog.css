@@ -19,6 +19,7 @@ header {
 }
 
 footer {
+    position: absolute;
 }
 
 header > h1 {
@@ -39,6 +40,7 @@ footer > h6 {
 }
 
 .tile {
+    position:absolute;
     margin: 5px;
     float: left;
     width: 150px;
@@ -103,12 +105,12 @@ footer > h6 {
     background: #F4F4F4
 }
 
-.login svg polygon{
+.login svg polygon {
     fill: #C60C30;
 }
 
 .login img {
-    position: inherit;
+    position: absolute;
     top: 50%;
     left: 75px;
     margin: -26px;
@@ -138,9 +140,10 @@ footer > h6 {
     width: 52px;
     background: url("../images/enter.png") no-repeat;
     border: 0;
+    color:transparent;
 }
 
-.login .error {
+.login span {
     position: absolute;
     left: 175px;
     top: 25%;
