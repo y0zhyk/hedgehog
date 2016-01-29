@@ -41,7 +41,7 @@ def logout():
 def authenticate_user(username, password):
     try:
         from pam import pam
-        if pam.authenticate(username, password):
+        if pam().authenticate(username, password):
             return True, None
         else:
             return False, "Incorrect password"
