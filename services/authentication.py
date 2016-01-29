@@ -40,7 +40,7 @@ def logout():
 
 def authenticate_user(username, password):
     try:
-        import pam
+        from pam import pam
         if pam.authenticate(username, password):
             return True, None
         else:
