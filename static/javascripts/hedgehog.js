@@ -1,4 +1,4 @@
-showStats = function () {
+var showStats = function () {
     return $.getJSON('api/stats', function (data) {
         var i, len, ref, stat;
         ref = data.stats;
@@ -10,7 +10,7 @@ showStats = function () {
     });
 };
 
-updateStats = function () {
+var updateStats = function () {
     return $.getJSON('api/stats', function (data) {
         var i, len, ref, stat;
         ref = data.stats;
@@ -24,11 +24,11 @@ updateStats = function () {
     });
 };
 
-$(document).ready(function() {
+$(document).ready(function () {
 
     var Consts = {
         tileSize: 150,
-        gutter: 10,
+        gutter: 10
     };
 
     var Tile = function () {
@@ -39,36 +39,45 @@ $(document).ready(function() {
 
     var tiles = [];
 
-    var windowWidth = $('body').width();
-    var maxNumberOfTiles = Math.floor(windowWidth / (Consts.tileSize + Consts.gutter))
+    //var maxNumberOfTiles = Math.floor(windowWidth / (Consts.tileSize + Consts.gutter))
 
     var totalTilesWidth = 0;
     var maxTileHeight = 0;
-    $('.tile').each(function() {
+    $('.tile').each(function () {
         var tile = new Tile();
         tile.width = this.offsetWidth;
         tile.height = this.offsetHeight;
         tile.self = this;
         totalTilesWidth += tile.width + Consts.gutter;
+        maxTileHeight = Math.max(tile.height, maxTileHeight);
         tiles.push(tile);
-        maxTileHeight = Math.max(tile.height, maxTileHeight)
     });
 
-    var numberOfTiles = tiles.length;
+    var rearrange = function () {
+        var windowWidth = $('body').width();
+        if (totalTilesWidth <= windowWidth) {
+            var x = Math.floor((windowWidth - totalTilesWidth) / 2);
+            var numberOfTiles = tiles.length;
+            for (var i = 0; i < numberOfTiles; i++) {
+                var tile = tiles[i];
+                $(tile.self).css({
+                    left: x
+                });
+                x += tile.width + Consts.gutter;
+            }
 
-    if (totalTilesWidth <= windowWidth) {
-        var x = Math.floor((windowWidth - totalTilesWidth) / 2);
-        for (var i = 0; i < numberOfTiles; i++) {
-            var tile = tiles[i];
-            $(tile.self).css({
-                left: x
+            $('footer').css({
+                top: 100 + maxTileHeight + Consts.gutter
             });
-            x += tile.width + Consts.gutter;
-        };
 
-        $('footer').css({
-            top: 100 + maxTileHeight + Consts.gutter
-        });
+        }
 
-    }
+    };
+
+    $(window).resize(function () {
+        rearrange();
+    });
+
+    rearrange();
+
 });
