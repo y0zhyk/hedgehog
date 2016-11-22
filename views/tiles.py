@@ -147,4 +147,6 @@ def tiles(is_session_authenticated):
         return [StatsTile(),
                 ClickableIconTile(name='Logout', icon='logout.png', href='/api/logout', color='#C60C30'),
                 ClickableIconTile(name='Mikrotik', icon='router.png', href='http://192.168.1.1', color='#1E7145'),
+                ClickableIconTile(name='Torrent', icon='router.png', href='http://192.168.1.238:9091', color='#1E7145'),
+                ClickableIconTile(name='Plex', icon='router.png', href='http://192.168.1.238:32400', color='#1E7145'),
                 ]

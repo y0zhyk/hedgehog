@@ -60,6 +60,18 @@ def cpu_temperature():
         pass
     return value, "{}'C".format(value)
 
+def hdd_usage():
+    percent = 0
+    value = "0B"
+    try:
+        import psutil
+        usage = psutil.disk_usage('/mnt/usbhdd')
+        percent = usage.percent
+        value = "{:.1f}GB/{:.1f}GB".format(usage.used / 1073741824., usage.total / 1073741824.)
+    except ImportError:
+        pass
+    return percent, value
+
 
 class StatItem:
     def __init__(self, name, percent, value):
@@ -105,7 +117,7 @@ class Stats(object):
                     StatItem('mem', *memory_usage()),
                     StatItem('swap', *swap_usage()),
                     StatItem('disk', *disk_usage()),
-                    StatItem('temp', *cpu_temperature())
+                    StatItem('temp', *hdd_usage())
                 ]
         )
 
