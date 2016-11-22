@@ -117,7 +117,7 @@ class Stats(object):
                     StatItem('mem', *memory_usage()),
                     StatItem('swap', *swap_usage()),
                     StatItem('disk', *disk_usage()),
-                    StatItem('temp', *hdd_usage())
+                    StatItem('hdd', *hdd_usage())
                 ]
         )
 
