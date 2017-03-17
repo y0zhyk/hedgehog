@@ -65,7 +65,7 @@ def hdd_usage():
     value = "0B"
     try:
         import psutil
-        usage = psutil.disk_usage('/mnt/usbhdd')
+        usage = psutil.disk_usage('/mnt/storage')
         percent = usage.percent
         value = "{:.1f}GB/{:.1f}GB".format(usage.used / 1073741824., usage.total / 1073741824.)
     except ImportError:

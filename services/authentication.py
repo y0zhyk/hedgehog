@@ -23,7 +23,7 @@ def login():
     global error
     if request.method == 'POST':
         password = request.form['password']
-        result, error = authenticate_user('yozhyk', password)
+        result, error = authenticate_user('ubuntu', password)
         if result:
             session['auth-ticket'] = generate_auth_ticket()
         return redirect('/')
